@@ -1,5 +1,48 @@
 $fn=190;
 
+module ledholder() {
+    difference() {
+        cube([30 + 10, 30 + 10, 6]);
+    
+        translate([5, 5, -1]) {
+            cube([14, 14, 5]);
+        }
+    
+        translate([5, 5 + 2 + 14, -1]) {
+            cube([14, 14, 5]);
+        }
+    
+        translate([5 + 2 + 14, 5, -1]) {
+            cube([14, 14, 5]);
+        }
+    
+        translate([5 + 2 + 14, 5 +2 +14, -1]) {
+            cube([14, 14, 5]);
+        }
+    
+        translate([5+7, 5+7+2+14, -1]) cylinder(d=5.5, h=30);
+        translate([5+7+2+14,5+7 , -1]) cylinder(d=5.5, h=30);
+        translate([5+7+2+14, 5+7+2+14, -1]) cylinder(d=5.5, h=30);
+        translate([5+7, 5+7, -1]) cylinder(d=5.5, h=30);
+    }
+}
+
+module leg() {
+    difference() {
+        cube([15, 15, 40]);
+        translate([1.2, 1.2, 1.2]) {
+            cube([15-2.4, 15-2.4, 40]);
+        }
+    }
+}
+
+module arm() {
+    cube([30, 11, 11]);
+    translate([0, 0, 11]) {
+        cube([7, 11, 7]);
+    }
+}
+
 
 module kopf() {
     difference() {
@@ -61,12 +104,32 @@ module mund() {
 }
 
 
-translate([100, 0, 0]) {
+translate([-10, 0, 60]) {
     kopf();
 }
 
-translate([100, 0, 70]) {
+translate([10, -20, 70]) {
     mund();
 }
 
 body();
+
+translate([5, 0, -50]) {
+    leg();
+}
+
+translate([30, 0, -50]) {
+    leg();
+}
+
+translate([-20, 0, 50]) {
+    rotate([0, 90, 0]) arm();
+}
+
+translate([70, 20, 50]) {
+    rotate([180, 90, 0]) arm();
+}
+
+translate([5, 50, 10]) {
+    rotate([90, 0, 0]) ledholder();
+}
