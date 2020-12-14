@@ -16,7 +16,7 @@ CRGB leds[NUM_LEDS];
 uint8_t led_brightness = 10;
 int distance;
 unsigned long us_start_time = 0;
-unsigned long us_interval_time = 200;
+unsigned long us_interval_time = 100;
 uint8_t us_interval = 0;
 int us_distance = 0;
 bool head_rotate = false;
@@ -29,6 +29,7 @@ unsigned long head_interval_time = 100;
 
 uint8_t head_pos = 90;
 bool head_direction = true;
+
 CRGB colors[4] = {
   CRGB::DarkRed,
   CRGB::DarkBlue,
@@ -41,7 +42,7 @@ void setup() {
   Serial.println("Starting...");
 
   head.attach(PIN_SERVO);
-  ultrasonic.setTimeout(40000UL);
+  ultrasonic.setTimeout(20000UL);
 
   FastLED.addLeds<PL9823, LED_PIN>(leds, NUM_LEDS);
   FastLED.setBrightness(led_brightness);
@@ -70,12 +71,14 @@ void loop() {
     FastLED.show();
   }
   if (millis() - us_start_time >= us_interval_time) {
-    us_distance += ultrasonic.read();
-    if (us_interval == 8 && head_rotate == false) {
-      if ((us_distance/8) == 7 || (us_distance/8) == 8 || (us_distance/8) == 9) {
+    int d = ultrasonic.read();
+    us_distance += d;
+    if (us_interval == 4 && head_rotate == false) {
+      if ((us_distance/4) > 5 && (us_distance/4) < 13) {
         head_rotate = true;
         head_start_time = millis();
       }
+      us_interval = 0;
       us_distance = 0;
     }
     else {
@@ -83,6 +86,7 @@ void loop() {
     }
     us_start_time = millis();
   }
+
   if ((millis() - head_start_time  >= head_interval_time) && head_rotate == true) {
 
     if (head_pos > 150) {
