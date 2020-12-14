@@ -30,11 +30,16 @@ unsigned long head_interval_time = 100;
 uint8_t head_pos = 90;
 bool head_direction = true;
 
-CRGB colors[4] = {
+#define MAX_LED_COLORS 7
+CRGB colors[MAX_LED_COLORS + 1] = {
+  CRGB::Maroon,
   CRGB::DarkRed,
   CRGB::DarkBlue,
   CRGB::DarkGreen,
   CRGB::ForestGreen,
+  CRGB::MediumOrchid,
+  CRGB::Purple,
+  CRGB::BlueViolet,
 };
 
 void setup() {
@@ -48,7 +53,7 @@ void setup() {
   FastLED.setBrightness(led_brightness);
   FastLED.clear(true);
 
-  leds[0] = CRGB::DarkRed;
+  leds[0] = CRGB::MediumOrchid;
   leds[1] = CRGB::DarkBlue;
   leds[2] = CRGB::DarkGreen;
   leds[3] = CRGB::ForestGreen;
@@ -64,10 +69,10 @@ void setup() {
 void loop() {
   if (millis() - led_start_time >= led_interval_time) {
     led_start_time = millis();
-    leds[0] = colors[random(0, 3)];
-    leds[1] = colors[random(0, 3)];
-    leds[2] = colors[random(0, 3)];
-    leds[3] = colors[random(0, 3)];
+    leds[0] = colors[random(0, MAX_LED_COLORS)];
+    leds[1] = colors[random(0, MAX_LED_COLORS)];
+    leds[2] = colors[random(0, MAX_LED_COLORS)];
+    leds[3] = colors[random(0, MAX_LED_COLORS)];
     FastLED.show();
   }
   if (millis() - us_start_time >= us_interval_time) {
