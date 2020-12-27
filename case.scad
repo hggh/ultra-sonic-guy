@@ -2,7 +2,7 @@ $fn=190;
 
 module eye($foo=true) {
     difference() {
-        cylinder(d=15, h=8, $fn=90);
+        cylinder(d=16, h=8, $fn=90);
         if ($foo == true) {
             translate([0, 0, -1]) cylinder(d=12, h=10, $fn=90);
         }
@@ -45,10 +45,21 @@ module leg() {
     }
 }
 
-module arm() {
-    cube([30, 11, 11]);
-    translate([0, 0, 11]) {
-        cube([7, 11, 7]);
+module arm($switch=false) {
+    difference() {
+        union() {
+            cube([30, 11, 11]);
+            translate([0, 0, 11]) {
+                cube([7, 11, 7]);
+            }
+        }
+        if ($switch == true) {
+            translate([15, -1, 3])
+            cube([10, 3, 5]);
+            translate([3, -1, 4]) cube([20, 2, 2]);
+            translate([3, -1, 4]) cube([2, 2, 30]);
+            translate([3, -1, 17]) cube([2, 7, 2]);
+        }
     }
 }
 
@@ -87,14 +98,14 @@ module body() {
     difference() {
         cube([50, 40, 55]);
         
-        translate([1.2, 2, 2]) {
-            cube([50-2.4, 100, 55-4]);
+        translate([1.2, 2, 1.2]) {
+            cube([50-2.4, 100, 55-2.4]);
         }
         translate([10, -1, 12.5]) {
             cube([30, 30, 30]);
         }
-        translate([19, 14.5, 55-3]) {
-            cube([12, 23, 4]);
+        translate([18.5, 13.5, 55-3]) {
+            cube([13.2, 24, 4]);
         }
         
         // arms
@@ -132,12 +143,12 @@ translate([30, 0, -50]) {
     leg();
 }
 
-translate([-20, 0, 50]) {
+translate([-20, 80, 50]) {
     rotate([0, 90, 0]) arm();
 }
 
-translate([70, 20, 50]) {
-    rotate([180, 90, 0]) arm();
+translate([20, 91, 50]) {
+    rotate([180, 90, 0]) arm(true);
 }
 
 translate([5, 50, 10]) {
