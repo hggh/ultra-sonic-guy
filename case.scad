@@ -56,9 +56,9 @@ module arm($switch=false) {
         if ($switch == true) {
             translate([15, -1, 3])
             cube([10, 3, 5]);
-            translate([3, -1, 4]) cube([20, 2, 2]);
-            translate([3, -1, 4]) cube([2, 2, 30]);
-            translate([3, -1, 17]) cube([2, 7, 2]);
+            translate([3, -1, 4]) cube([15, 4, 2]);
+            translate([3, -1, 4]) cube([2, 4, 30]);
+            translate([2.5, -1, 15]) cube([3, 7, 10]);
         }
     }
 }
